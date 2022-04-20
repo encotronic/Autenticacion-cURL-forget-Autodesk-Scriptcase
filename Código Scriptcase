@@ -1,0 +1,84 @@
+///////////--------------- Ejemplo de conexión con API Autodesk Forge con cURL en Scriptcase//--------------
+///////////--------------- Autenticación y uso de recursos cURL//
+///////////--------------- Pagina recomendada para hacer Pruebas: https://reqbin.com/curl
+///////////--------------- Autor: Encor Escobar. Mail: encotronic@gmail.com
+
+////------      Dirección URL
+$url = "https://developer.api.autodesk.com/authentication/v1/authenticate";
+////------      Datos
+$client = "9e33dLB6yGOLAAminLMkGZOMjnTM7F7P";  //ejemplo codigo no valido
+$secret = "WHjXe42J0KEibWKF";                  //ejemplo codigo no valido
+$grant = "client_credentials";
+$scope = "data:read";
+$data = "client_id=".$client."&client_secret=".$secret."&grant_type=".$grant."&scope=".$scope."";
+////------      Inicialización de cURL
+$curl = curl_init();
+////------      Configuración de parámetros cURL
+curl_setopt_array($curl, array(
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS => $data,
+  CURLOPT_HTTPHEADER => array(
+   "Content-Type: application/x-www-form-urlencoded"
+  ),
+));
+////------      Objeto de Respuesta de cURL
+$response = curl_exec($curl);
+// Objeto de Error de cURL
+$err = curl_error($curl);
+
+//------      Si ocurre un error imprime el objeto de error
+if ($err) {
+  echo "cURL Error #:" . $err;
+//------      Si no imprime el bjeto Respuesta
+} else {
+  echo $response;
+////-------     ejemplo 1 con expolde separa el objeto json por ":"
+// 	$result = explode(':', $response);
+// echo '<center><h2>Device List</h2></center>';
+		
+// 		foreach($result as $device){
+// 			echo "* " .  $device . "<br>";
+// 		}
+	
+////------      ejemplo 2 con multiexplode (",","{","}",":",'"')
+	function multiexplode ($delimiters,$json) {
+	$MakeReady = str_replace($delimiters, $delimiters[0], $json);
+	$Return    = explode($delimiters[0], $MakeReady);
+	return  $Return;
+}
+$json = $response;
+
+$Exploded = multiexplode(array(",","{","}",":",'"'),$json);
+}
+
+
+// Muestra la Descomposición del Json
+
+
+echo"<br>";
+echo "Resultado ";
+echo"<br>";
+echo "Array [0] = $Exploded[0]";
+echo"<br>";
+echo "Array [1] = $Exploded[1]";
+echo"<br>";
+echo "Array [2] = $Exploded[2]";
+echo"<br>";
+echo "Array [4] = $Exploded[3]";
+echo"<br>";
+echo "Array [4] = $Exploded[4]";
+echo"<br>";
+echo "Array [5] = $Exploded[5]";
+echo"<br>";
+echo "Array [6] = $Exploded[6]";
+echo"<br>";
+echo "Array [7] = $Exploded[7]";
+echo"<br>";
+
+curl_close($curl);
