@@ -1,7 +1,12 @@
+
 ///////////--------------- Ejemplo de conexión con API Autodesk Forge con cURL en Scriptcase//--------------
 ///////////--------------- Autenticación y uso de recursos cURL//
 ///////////--------------- Pagina recomendada para hacer Pruebas: https://reqbin.com/curl
 ///////////--------------- Autor: Encor Escobar. Mail: encotronic@gmail.com
+///////////--------------- Documentación de la API de Autodesk Forge:  https://forge.autodesk.com/developer/documentation
+
+////////. Requerimientos para conectarse a la API : buket key: (nombre único del buket), Header: (Token generado).
+
 $buket_key = "7e51dlb3ygotaaminlmkgzomzntm7f9p_tutorial_bucket";
 ////------      Dirección URL
 $url = "https://developer.api.autodesk.com/oss/v2/buckets/$buket_key/details";
