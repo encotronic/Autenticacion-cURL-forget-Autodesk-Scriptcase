@@ -4,7 +4,7 @@
 ///////////--------------- Autor: Encor Escobar. Mail: encotronic@gmail.com
 ///////////--------------- Documentación de la API de Autodesk Forge:  https://forge.autodesk.com/developer/documentation
 
-////////. Requenimientos para conectarse a la API : Clienete: (Codigo Cliente), Secret: (Clave Secreta), Grant (cliente_credencial), scope: (Tipo de acceso)
+////////. Requerimientos para conectarse a la API : Clienete: (Codigo Cliente), Secret: (Clave Secreta), Grant (cliente_credencial), scope: (Tipo de acceso)
 
 ////------      Dirección URL
 $url = "https://developer.api.autodesk.com/authentication/v1/authenticate";
