@@ -1,0 +1,82 @@
+///////////--------------- Ejemplo de conexión con API Autodesk Forge con cURL en Scriptcase//--------------
+///////////--------------- Autenticación y uso de recursos cURL//
+///////////--------------- Pagina recomendada para hacer Pruebas: https://reqbin.com/curl
+///////////--------------- Autor: Encor Escobar. Mail: encotronic@gmail.com
+///////////--------------- Documentación de la API de Autodesk Forge:  https://forge.autodesk.com/developer/documentation
+
+////////. Requerimientos para conectarse a la API : buket key: (nombre unico del buket), header: (token generado con permisos para borrar).
+
+$buket_key = "7e51dlb3ygotaaminlmkgzomzntm7f9p_tutorial_bucke";
+////------      Dirección URL
+$url = "https://developer.api.autodesk.com/oss/v2/buckets/$buket_key";
+
+$headers = array("Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJidWNrZXQ6cmVhZCIsImRhdGE6cmVhZCIsImJ1Y2tldDpkZWxldGUiXSwiY2xpZW50X2lkIjoiN2U1MWRMQjN5R09UQUFtaW5MTWtHWk9Nem5UTTdGOVAiLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbS9hdWQvYWp3dGV4cDYwIiwianRpIjoiOFlRQlZCbDVHUmdjZElLRk96MDNrVThjcjdySzkyV3l1c2hHQWdueGQxU3JWc3lmenFqS0FaZmQ1ZlpjdWNSRiIsImV4cCI6MTY1MDQ0NTAyNn0.DRO3O37ciHTiTBr7n-y9YGaEzl15FwqVyS8Nga6Wsf3gjSo-FC6Th3HRLJHW2q0tJRAiZ1Ux0Y8orlJ6a7al6F8epVV77NwXOwTey6IDEcLpx2GKZUxjorst9iLPPujj5m0e9JYGVpOpTQGtPnSVPxswdiaEv4Yu3RQsCp20igJJwiZhjILPsAZo8CWmi1Um-qTTs3i0IzEoMumqPTeB9VJ5TgmzIPOaUbCoChaWo_uczf1Ysb-regbDGE_pgbKD-O2PZDonYJZjjZCuXceVWvm0m6V9qxOLoptIku0nJGZosQvdEfGHmWzE0Wn0yjM4VW63JnQRCiMRvajG3uIDYQ", "Content-Type: application/json");
+
+////------      Inicialización de cURL
+$curl = curl_init();
+////------      Configuración de parámetros cURL
+curl_setopt_array($curl, array(
+  CURLOPT_URL => $url,
+  CURLOPT_HTTPHEADER => $headers,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  // CURLOPT_SSL_VERIFYHOST => false,
+  // CURLOPT_SSL_VERIFYPEER => false,
+  CURLOPT_CUSTOMREQUEST => "DELETE",
+	  
+));
+////------      Objeto de Respuesta de cURL
+$response = curl_exec($curl);
+// Objeto de Error de cURL
+$err = curl_error($curl);
+
+//------      Si ocurre un error imprime el objeto de error
+if ($err) {
+  echo "cURL Error #:" . $err;
+//------      Si no imprime el bjeto Respuesta
+} else {
+  echo $response;
+////-------     ejemplo 1 con expolde separa el objeto json por ":"
+// 	$result = explode(':', $response);
+// echo '<center><h2>Device List</h2></center>';
+		
+// 		foreach($result as $device){
+// 			echo "* " .  $device . "<br>";
+// 		}
+	
+////------      ejemplo 2 con multiexplode (",","{","}",":",'"')
+	function multiexplode ($delimiters,$json) {
+	$MakeReady = str_replace($delimiters, $delimiters[0], $json);
+	$Return    = explode($delimiters[0], $MakeReady);
+	return  $Return;
+}
+$json = $response;
+
+$Exploded = multiexplode(array(",","{","}",":",'"'),$json);
+}
+
+
+// Muestra la Descomposición del Json
+
+
+echo"<br>";
+echo "Resultado ";
+echo"<br>";
+echo "Array [0] = $Exploded[0]";
+echo"<br>";
+echo "Array [1] = $Exploded[1]";
+echo"<br>";
+echo "Array [2] = $Exploded[2]";
+echo"<br>";
+echo "Array [4] = $Exploded[3]";
+echo"<br>";
+echo "Array [4] = $Exploded[4]";
+echo"<br>";
+echo "Array [5] = $Exploded[5]";
+echo"<br>";
+echo "Array [6] = $Exploded[6]";
+echo"<br>";
+echo "Array [7] = $Exploded[7]";
+echo"<br>";
