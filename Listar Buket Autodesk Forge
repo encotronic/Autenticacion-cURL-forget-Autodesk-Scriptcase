@@ -1,0 +1,81 @@
+///////////--------------- Antes de Comenzar debe haber autenticado y generado el respectivo token ---------
+///////////--------------- Ejemplo de conexión con API Autodesk Forge con cURL en Scriptcase//--------------
+///////////--------------- Listar Bukets Autodesk Forge y uso de recursos cURL//
+///////////--------------- Pagina recomendada para hacer Pruebas: https://reqbin.com/curl
+///////////--------------- Autor: Encor Escobar. Mail: encotronic@gmail.com
+
+
+
+////------      Dirección URL
+$url = "https://developer.api.autodesk.com/oss/v2/buckets";
+
+$headers = array("Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJidWNrZXQ6cmVhZCIsImRhdGE6cmVhZCIsImJ1Y2tldDpkZWxldGUiXSwiY2xpZW50X2lkIjoiN2U1MWRMQjN5R09UQUFtaW5MTWtHWk9Nem5UTTdGOVAiLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbS9hdWQvYWp3dGV4cDYwIiwianRpIjoiV2M0Nkdsa2lwQ1ZkVHJqV1VvZ3FOZms1anRQQkR5cE5tS2RIOVd4WnJDOG5LODI3NFJjckxHQndNUlJ2bVU2biIsImV4cCI6MTY1MDQ5NjU1NH0.OSgyeusGLYOOahrXzZrumdP9w5Ymh-gYk2Ok6WFhpVzNrnO0I3J97pmd4aNiEMERSyzWUXwpgkuhd0I3WQfLIsPRsVrtB1QT8aq-reYeGMRdjZ4mbySY-3qu_PKetcIETtqL5kCDy1rDVzCugY6V7lXafRwADG6S9EGNTBtHiMFaTV9JQjfRenEGqmJEZo_C6KoVo455_-nZPwBX2tSG_SHABRi33bqc623zdqv1AKjvwjvBt8Kby63ykJSFmqkw9fd7L5Pjgfh54boAJfARm0KE_JGduCIlyeLILqJpJUPeEs0oIHIHYSYEtCgiiVFkuH5DTX7GgnVCfI2BRiC4IQ");
+
+////------      Inicialización de cURL
+$curl = curl_init();
+////------      Configuración de parámetros cURL
+curl_setopt_array($curl, array(
+  CURLOPT_URL => $url,
+  CURLOPT_HTTPHEADER => $headers,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  // CURLOPT_SSL_VERIFYHOST => false,
+  // CURLOPT_SSL_VERIFYPEER => false,
+  CURLOPT_CUSTOMREQUEST => "GET",
+	  
+));
+////------      Objeto de Respuesta de cURL
+$response = curl_exec($curl);
+// Objeto de Error de cURL
+$err = curl_error($curl);
+
+//------      Si ocurre un error imprime el objeto de error
+if ($err) {
+  echo "cURL Error #:" . $err;
+//------      Si no imprime el bjeto Respuesta
+} else {
+  echo $response;
+////-------     ejemplo 1 con expolde separa el objeto json por ":"
+// 	$result = explode(':', $response);
+// echo '<center><h2>Device List</h2></center>';
+		
+// 		foreach($result as $device){
+// 			echo "* " .  $device . "<br>";
+// 		}
+	
+////------      ejemplo 2 con multiexplode (",","{","}",":",'"')
+	function multiexplode ($delimiters,$json) {
+	$MakeReady = str_replace($delimiters, $delimiters[0], $json);
+	$Return    = explode($delimiters[0], $MakeReady);
+	return  $Return;
+}
+$json = $response;
+
+$Exploded = multiexplode(array(",","{","}",":",'"'),$json);
+}
+
+
+// Muestra la Descomposición del Json
+
+
+echo"<br>";
+echo "Resultado ";
+echo"<br>";
+echo "Array [0] = $Exploded[0]";
+echo"<br>";
+echo "Array [1] = $Exploded[1]";
+echo"<br>";
+echo "Array [2] = $Exploded[2]";
+echo"<br>";
+echo "Array [4] = $Exploded[3]";
+echo"<br>";
+echo "Array [4] = $Exploded[4]";
+echo"<br>";
+echo "Array [5] = $Exploded[5]";
+echo"<br>";
+echo "Array [6] = $Exploded[6]";
+echo"<br>";
+echo "Array [7] = $Exploded[7]";
+echo"<br>";
